@@ -22,3 +22,8 @@ Create the virtual environment:
     $ conda create -n CovidNY python=3.8 -y
     $ conda activate CovidNY
     ```
+
+Install all the requirements, run the line:
+```
+ pip install -r requirements.txt
+```
