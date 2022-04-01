@@ -1,29 +1,30 @@
 # Covid-Dashboard-NY
-It is a project that aims to visualize the covid dataset.
-Instal **Conda** on your computer, you can install **Anaconda** or **Miniconda** for that.
+#### It is a project that aims to visualize the covid dataset.
 
-Conda is a language-agnostic tool for package management and environment management. 
+1. Instal **Conda** on your computer, you can install **Anaconda** or **Miniconda** for that.
 
-Anaconda is the most popular Python distribution. By installing Anaconda, you get Miniconda, Anaconda Navigator (i.e. a graphical user interface) and curated selection of packages installed.
+   <ins>Conda</ins> is a language-agnostic tool for package management and environment management. 
 
-Miniconda is a mini-scale version of Anaconda. It is also a Python distribution. By installing Miniconda, you get Conda, Python and a small number of packages installed.
+   <ins>Anaconda</ins> is the most popular Python distribution. <ins>By installing Anaconda, you get Miniconda, Anaconda Navigator (i.e. a graphical user interface) and curated selection of packages installed</ins>.
 
-**As we can see, Conda is included in both Anaconda and Miniconda.** 
+   <ins>Miniconda</ins> is a mini-scale version of Anaconda. It is also a Python distribution. <ins>By installing Miniconda, you get Conda, Python and a small number of packages installed</ins>.
 
-Create the virtual environment:
+   **As we can see, Conda is included in both Anaconda and Miniconda.** 
 
-- Open the command-line interface for your operating system with the following instructions:
+2. Create the virtual environment:
 
-   - Windows: Press windows key ➡️ Type Anaconda prompt ➡️ Press enter
-   - Mac: Press cmd + space bar ➡️ Type Terminal ➡️ Press enter
+   - Open the command-line interface for your operating system with the following instructions:
+
+         - Windows: Press windows key ➡️ Type Anaconda prompt ➡️ Press enter
+         - Mac: Press cmd + space bar ➡️ Type Terminal ➡️ Press enter
    
- - Create the environment by using commands
-    ```
-    $ conda create -n CovidNY python=3.8 -y
-    $ conda activate CovidNY
-    ```
+   - Create the environment by using commands
+      ```
+      $ conda create -n CovidNY python=3.8 -y
+      $ conda activate CovidNY
+      ```
 
-Install all the requirements, run the line:
+3. Install all the requirements, run the line:
 ```
  pip install -r requirements.txt
 ```
