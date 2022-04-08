@@ -13,7 +13,7 @@ import plotly.express as px
 st.write("# COVID Dashboard")
 st.write("#### Yasamin & Natalia")
 
-covid = pd.read_csv(r"data.txt")
+covid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
 covid
 
 covid['date'] = pd.to_datetime(covid['date'])
@@ -21,11 +21,12 @@ covid['year'] = covid['date'].dt.year
 covid['month'] = covid['date'].dt.month
 
 clist = covid['location'].unique()
-country = st.sidebar.selectbox("Select a country:",clist)
+country = st.sidebar.multiselect("Select a country:",clist, default = ["Iran"])
 
-fig = px.line(covid[covid['location'] == country], x = "date", y = "new_cases_per_million", title = country)
+fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country))
 st.plotly_chart(fig)
 
+st.slider("Time slider", min_value=min(covid['date']), max_value=max(covid["date"]))
 '''df1 = covid.groupby(by='continent')['people_fully_vaccinated_per_hundred'].sum()
 df2 = df1.reset_index()
 explode = (0, 0, 0, 0,0,0)  
