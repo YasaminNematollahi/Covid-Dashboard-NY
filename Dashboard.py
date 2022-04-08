@@ -6,10 +6,6 @@ Here's our first attempt at using data to create a table:
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import plotly
-import plotly.express as px
-
-
 st.write("# COVID Dashboard")
 st.write("#### Yasamin & Natalia")
 
@@ -27,6 +23,8 @@ fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cas
 st.plotly_chart(fig)
 
 st.slider("Time slider", min_value=min(covid['date']), max_value=max(covid["date"]))
+
+
 '''df1 = covid.groupby(by='continent')['people_fully_vaccinated_per_hundred'].sum()
 df2 = df1.reset_index()
 explode = (0, 0, 0, 0,0,0)  
@@ -50,52 +48,18 @@ df_plot = covid.loc[covid.location == str(options)]
 state_data = covid[covid['location'] == options]
 
 select_status = st.sidebar.radio("Covid-19 patient's status", ('Total Cases','New cases', 'New deaths', 'New tests'))
+df = pd.read_csv('owid-covid-data.csv',parse_dates=['date']) 
+df
+options=st.selectbox("Choose the value", df.location.unique,format_func=lambda x: display[x])
+df_plot = df.loc[df.location == str(options)]
 
 plt.figure(figsize=(15, 8))
 plt.plot(df_plot.date,df_plot.new_cases)
 plt.title('Evolution of number of new cases for France')
 plt.legend(['Number of new cases'])
 plt.show
-st.pyplot()
-
-
-def get_total_dataframe(dataset):
-    total_dataframe = pd.DataFrame({
-    'Status':['Total Cases', 'New cases', 'New deaths','New tests'],
-    'Number of cases':(dataset.iloc[0]['total_cases'],
-    dataset.iloc[0]['new_cases'], 
-    dataset.iloc[0]['new_deaths'],dataset.iloc[0]['new_tests'])})
-    return total_dataframe
-
-state_total = get_total_dataframe(state_data)
-
-if st.sidebar.checkbox("Show Analysis by State", True, key=2):
-    st.markdown("## **Covid analysis**")
-    st.markdown("### Overall Cases, New cases, deaths and " +
-    "Deceased cases in %s yet" % (options))
-    if not st.checkbox('Hide Graph', False, key=1):
-        state_total_graph = px.bar(
-        state_total, 
-        x='Status',
-        y='Number of cases',
-        labels={'Number of cases':'Number of cases in %s' % (options)},
-        color='Status')
-        st.plotly_chart(state_total_graph)
-
-
-options1 = st.sidebar.selectbox('Select the date', covid.year.unique())
-
-df_plot = covid.loc[covid.year == str(options1)]
-state_data = covid[covid['year'] == options1]
-
-
-
-'''plt.figure(figsize=(15, 8))
-plt.plot(df_plot.date,df_plot.new_cases)
-plt.title('Evolution of number of new cases for France')
-plt.legend(['Number of new cases'])
-plt.show
+#df.columns
+#fig = plt.figure()
+#plt.plot(df[df["Country/Region"]=="France"].iloc[[0]].iloc[:,4:].values[0])
 # Plots the chart
-st.pyplot(fig)'''
-
-
+st.pyplot(fig)
