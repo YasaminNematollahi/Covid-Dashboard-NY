@@ -6,6 +6,8 @@ Here's our first attempt at using data to create a table:
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px
+import datetime as dt
 st.write("# COVID Dashboard")
 st.write("#### Yasamin & Natalia")
 
@@ -22,7 +24,15 @@ country = st.sidebar.multiselect("Select a country:",clist, default = ["Iran"])
 fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country))
 st.plotly_chart(fig)
 
-st.slider("Time slider", min_value=min(covid['date']), max_value=max(covid["date"]))
+format="MM/DD/YY"
+start_date = min(covid['date'])
+end_date = max(covid['date'])
+st.write(start_date)
+st.write(end_date)
+slider = st.slider('Select date', min_value=start_date, value=end_date ,max_value=end_date)
+
+#st.slider("Time slider", min_value=min(covid['date']), max_value=max(covid["date"]), format="MM/DD/YY - hh:mm")
+
 
 
 '''df1 = covid.groupby(by='continent')['people_fully_vaccinated_per_hundred'].sum()
