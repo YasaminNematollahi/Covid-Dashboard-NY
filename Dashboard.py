@@ -8,10 +8,31 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
 import datetime as dt
+
+#@st.experimental_memo
+#def read_csv(url) -> pd.DataFrame:
+#     # Fetch data from URL here, and then clean it up. 
+#    #data = pd.read_csv(url)
+#    return pd.read_csv(url)
+
+#st.write("# COVID Dashboard")
+#st.write("#### Yasamin & Natalia")
+
+##covid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
+#covid = read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
+#covid
+
+@st.cache(allow_output_mutation = True)
+def fetch_and_clean_data(url):
+     # Fetch data from URL here, and then clean it up. 
+    data = pd.read_csv(url)
+    return data
+
 st.write("# COVID Dashboard")
 st.write("#### Yasamin & Natalia")
 
-covid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
+#covid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
+covid = fetch_and_clean_data('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
 covid
 
 covid['date'] = pd.to_datetime(covid['date'])
@@ -21,8 +42,14 @@ covid['month'] = covid['date'].dt.month
 clist = covid['location'].unique()
 country = st.sidebar.multiselect("Select a country:",clist, default = ["Iran"])
 
-fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country))
+mode = st.sidebar.radio("Select the mode for displaying", ("Covid-19 cases", "Covid-19 deaths"))
+
+if mode == "Covid-19 cases":
+  fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country))
+elif mode == "Covid-19 deaths":
+  fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_deaths_per_million", title = " and ".join(country))
 st.plotly_chart(fig)
+
 
 format="MM/DD/YY"
 start_date = min(covid['date'])
