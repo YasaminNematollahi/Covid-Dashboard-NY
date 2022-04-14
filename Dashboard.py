@@ -9,45 +9,36 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import datetime as dt
 
-#@st.experimental_memo
-#def read_csv(url) -> pd.DataFrame:
-#     # Fetch data from URL here, and then clean it up. 
-#    #data = pd.read_csv(url)
-#    return pd.read_csv(url)
-
-#st.write("# COVID Dashboard")
-#st.write("#### Yasamin & Natalia")
-
-##covid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
-#covid = read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
-#covid
-
+#cashing data
 @st.cache(allow_output_mutation = True)
-def fetch_and_clean_data(url):
-     # Fetch data from URL here, and then clean it up. 
+
+# function for reading data from url
+def readdata(url): 
     data = pd.read_csv(url)
     return data
 
 st.write("# COVID Dashboard")
 st.write("#### Yasamin & Natalia")
 
-#covid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
-covid = fetch_and_clean_data('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
+#read data with function readdata
+covid = readdata('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
 covid
 
 covid['date'] = pd.to_datetime(covid['date'])
 covid['year'] = covid['date'].dt.year
 covid['month'] = covid['date'].dt.month
 
+#select the location
 clist = covid['location'].unique()
 country = st.sidebar.multiselect("Select a country:",clist, default = ["Iran"])
 
+# select the mode for date
 mode = st.sidebar.radio("Select the mode for displaying", ("Covid-19 cases", "Covid-19 deaths"))
 
 if mode == "Covid-19 cases":
-  fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country))
+  fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country), color = "location")
 elif mode == "Covid-19 deaths":
-  fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_deaths_per_million", title = " and ".join(country))
+  fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_deaths_per_million", title = " and ".join(country), color = "location")
 st.plotly_chart(fig)
 
 
