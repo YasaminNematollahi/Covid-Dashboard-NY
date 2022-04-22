@@ -6,10 +6,11 @@ Here's our first attempt at using data to create a table:
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.express as px
 st.write("# COVID Dashboard")
 st.write("#### Yasamin & Natalia")
 
-covid = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
+covid = pd.read_csv(r"C:\Users\yasam\Covid-Dashboard-NY\data.txt")
 covid
 
 covid['date'] = pd.to_datetime(covid['date'])
@@ -19,11 +20,15 @@ covid['month'] = covid['date'].dt.month
 clist = covid['location'].unique()
 country = st.sidebar.multiselect("Select a country:",clist, default = ["Iran"])
 
-fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country))
+fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country), color='location')
 st.plotly_chart(fig)
 
-st.slider("Time slider", min_value=min(covid['date']), max_value=max(covid["date"]))
+st.slider("Time slider", min_value = min(covid['date']), max_value = max(covid["date"]),step = 1, value=covid['date'], format="MM/DD/YY")
 
+fig1 = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_deaths_per_million")
+st.plotly_chart(fig1)
+
+select_status = st.sidebar.radio("Covid-19 patient's status", ('Total Cases','New cases', 'New deaths', 'New tests'))
 
 '''df1 = covid.groupby(by='continent')['people_fully_vaccinated_per_hundred'].sum()
 df2 = df1.reset_index()
@@ -40,7 +45,7 @@ ax1.axis('equal')
 st.pyplot(fig1)'''
 
 
-st.sidebar.checkbox("Show analysis by country", True, key=1)
+'''st.sidebar.checkbox("Show analysis by country", True, key=1)
 options = st.multiselect('Which country',covid.location.unique())
 
 
@@ -63,3 +68,4 @@ plt.show
 #plt.plot(df[df["Country/Region"]=="France"].iloc[[0]].iloc[:,4:].values[0])
 # Plots the chart
 st.pyplot(fig)
+'''
