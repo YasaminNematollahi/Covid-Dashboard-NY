@@ -38,14 +38,15 @@ covid1 = covid.loc[(covid.date >= pd.to_datetime(start_date2)) & (covid.date <= 
 
 
 # select the mode for data
-mode = st.sidebar.radio("Select the mode for displaying", ("Covid-19 new cases", "Covid-19 cumulated number", "Covid-19 Avarage cases", "Covid-19 Deaths"))
+mode = st.sidebar.radio(" Select the mode for displaying", ("Covid-19 cases","Covid-19 rolling average", "Covid-19 cumulated","Covid-19 deaths"))
+#submode = st.si
 
-if mode == "Covid-19 new cases":
+if mode == "Covid-19 cases":
   fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country), color = "location")
-elif mode == "Covid-19 cumulated number":
-  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "total_deaths_per_million", title = " and ".join(country), color = "location")
-elif mode == "Covid-19 Avarage cases":
+elif mode == "Covid-19 cumulated":
+  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "total_cases_per_million", title = " and ".join(country), color = "location")
+elif mode == "Covid-19 rolling average":
   fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_cases_smoothed_per_million", title = " and ".join(country), color = "location")
 elif mode == "Covid-19 deaths":
-  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_deaths_per_million", title = " and ".join(country), color = "location")
+  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "total_deaths_per_million", title = " and ".join(country), color = "location")
 st.plotly_chart(fig)
