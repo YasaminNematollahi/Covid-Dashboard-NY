@@ -7,45 +7,73 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+import datetime as dt
+
+#cashing data
+@st.cache(allow_output_mutation = True)
+
+# function for reading data from url
+def readdata(url): 
+    data = pd.read_csv(url)
+    return data
+
 st.write("# COVID Dashboard")
 st.write("#### Yasamin & Natalia")
 
-covid = pd.read_csv(r"C:\Users\yasam\Covid-Dashboard-NY\data.txt")
+#read data with function readdata
+covid = readdata('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
 covid
 
 covid['date'] = pd.to_datetime(covid['date'])
 covid['year'] = covid['date'].dt.year
 covid['month'] = covid['date'].dt.month
 
+#select the location
 clist = covid['location'].unique()
 country = st.sidebar.multiselect("Select a country:",clist, default = ["Iran"])
 
-fig = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country), color='location')
+format="MM/DD/YY"
+start_date = min(covid['date'])
+end_date = max(covid['date'])
+#start_dt = st.sidebar.date_input('Start date', value=covid['date'].min())
+#end_dt = st.sidebar.date_input('End date', value=covid['date'].max())
+st.write(start_date)
+st.write(end_date)
+#slider = st.slider('Select date', min_value=start_date, value=end_date ,max_value=end_date)
+start_date2, end_date2 = st.date_input("Pick a date range", [start_date, end_date])
+covid1 = covid.loc[(covid.date >= pd.to_datetime(start_date2)) & (covid.date <= pd.to_datetime(end_date2))]
+#covid1
+
+# select the mode for data
+mode = st.sidebar.radio("Select the mode for displaying", ("Covid-19 cases", "Covid-19 deaths"))
+
+if mode == "Covid-19 cases":
+  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country), color = "location")
+elif mode == "Covid-19 deaths":
+  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_deaths_per_million", title = " and ".join(country), color = "location")
 st.plotly_chart(fig)
 
-st.slider("Time slider", min_value = min(covid['date']), max_value = max(covid["date"]),step = 1, value=covid['date'], format="MM/DD/YY")
 
-fig1 = px.line(covid[ covid['location'].isin(country) ], x = "date", y = "new_deaths_per_million")
-st.plotly_chart(fig1)
 
-select_status = st.sidebar.radio("Covid-19 patient's status", ('Total Cases','New cases', 'New deaths', 'New tests'))
+
+
+#st.slider("Time slider", min_value=min(covid['date']), max_value=max(covid["date"]), format="MM/DD/YY - hh:mm")
+
+
 
 '''df1 = covid.groupby(by='continent')['people_fully_vaccinated_per_hundred'].sum()
 df2 = df1.reset_index()
 explode = (0, 0, 0, 0,0,0)  
 labels =tuple(df2['continent'])
 data = df2['people_fully_vaccinated_per_hundred']
-
 fig1, ax1 = plt.subplots(figsize=(10, 8))
 ax1.pie(data, explode=explode, labels=labels, autopct='%1.1f%%', radius=10000,
 shadow=True, startangle=90)
 ax1.axis('equal')  
-
-
 st.pyplot(fig1)'''
 
 
-'''st.sidebar.checkbox("Show analysis by country", True, key=1)
+st.sidebar.checkbox("Show analysis by country", True, key=1)
 options = st.multiselect('Which country',covid.location.unique())
 
 
@@ -68,4 +96,3 @@ plt.show
 #plt.plot(df[df["Country/Region"]=="France"].iloc[[0]].iloc[:,4:].values[0])
 # Plots the chart
 st.pyplot(fig)
-'''
