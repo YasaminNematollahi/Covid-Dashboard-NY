@@ -45,13 +45,18 @@ covid1 = covid.loc[(covid.date >= pd.to_datetime(start_date2)) & (covid.date <= 
 #covid1
 
 # select the mode for data
-mode = st.sidebar.radio("Select the mode for displaying", ("Covid-19 cases", "Covid-19 deaths"))
+mode = st.sidebar.radio("Select the mode for displaying", ("Covid-19 new cases", "Covid-19 cumulated number", "Covid-19 Weekly cases", "Covid-19 Deaths"))
 
-if mode == "Covid-19 cases":
+if mode == "Covid-19 new cases":
   fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country), color = "location")
-elif mode == "Covid-19 deaths":
-  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_deaths_per_million", title = " and ".join(country), color = "location")
+elif mode == "Covid-19 cumulated number":
+  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "total_cases_per_million", title = " and ".join(country), color = "location")
+elif mode == "Covid-19 Weekly cases":
+  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "weekly_hosp_admissions", title = " and ".join(country), color = "location")
+elif mode == "Covid-19 Deaths":
+  fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "total_deaths_per_million", title = " and ".join(country), color = "location")
 st.plotly_chart(fig)
+
 
 
 
@@ -59,18 +64,6 @@ st.plotly_chart(fig)
 
 #st.slider("Time slider", min_value=min(covid['date']), max_value=max(covid["date"]), format="MM/DD/YY - hh:mm")
 
-
-
-'''df1 = covid.groupby(by='continent')['people_fully_vaccinated_per_hundred'].sum()
-df2 = df1.reset_index()
-explode = (0, 0, 0, 0,0,0)  
-labels =tuple(df2['continent'])
-data = df2['people_fully_vaccinated_per_hundred']
-fig1, ax1 = plt.subplots(figsize=(10, 8))
-ax1.pie(data, explode=explode, labels=labels, autopct='%1.1f%%', radius=10000,
-shadow=True, startangle=90)
-ax1.axis('equal')  
-st.pyplot(fig1)'''
 
 
 st.sidebar.checkbox("Show analysis by country", True, key=1)
