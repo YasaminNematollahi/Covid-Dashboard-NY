@@ -30,3 +30,6 @@
 ```
  python -m pip install -r requirements.txt
 ```
+
+
+You can find the streamlit cloud [here](https://share.streamlit.io/yasaminnematollahi/covid-dashboard-ny/main/Dashboard.py)
