@@ -31,5 +31,17 @@
  python -m pip install -r requirements.txt
 ```
 
+## For running the dashboard locally, follow the steps below:
+1. In Anaconda Navigator, open a terminal in your environment. You can open anaconda prompt from your search bar. In this case when the terminal opens, first you need to activate by writing: 
+```
+streamlit activate CovidNY
+```
+
+2. In the terminal that appears, write this code: 
+```
+streamlit run Dashboard.py
+```
+There you go. In your browser you can see the dashboard. Voila.
+
 
 You can find the streamlit cloud [here](https://share.streamlit.io/yasaminnematollahi/covid-dashboard-ny/main/Dashboard.py)
