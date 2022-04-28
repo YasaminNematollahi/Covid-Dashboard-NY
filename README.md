@@ -42,3 +42,5 @@ streamlit activate CovidNY
 streamlit run Dashboard.py
 ```
 There you go. In your browser you can see the dashboard. Voila.
+
+You can find the streamlit cloud [here](https://share.streamlit.io/yasaminnematollahi/covid-dashboard-ny/main/Dashboard.py).
