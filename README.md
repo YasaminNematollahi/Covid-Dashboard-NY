@@ -22,8 +22,8 @@
    
    - Create the environment by using commands
       ```
-      $ conda create -n CovidNY python=3.8 -y
-      $ conda activate CovidNY
+       conda create -n CovidNY python=3.8 -y
+       conda activate CovidNY
       ```
 
 3. Install all the requirements, run the line:
@@ -34,10 +34,13 @@
 ## For running the dashboard locally, follow the steps below:
 1. In Anaconda Navigator, open a terminal in your environment. You can open anaconda prompt from your search bar. In this case when the terminal opens, first you need to activate by writing: 
 ```
-streamlit activate CovidNY
+conda activate CovidNY
 ```
-
-2. In the terminal that appears, write this code: 
+2. Change the directory to Covid-Dashboard-NY 
+```
+cd Covid-Dashboard-NY
+```
+3. In the terminal that appears, write this code: 
 ```
 streamlit run Dashboard.py
 ```
