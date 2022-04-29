@@ -1,7 +1,7 @@
 [![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:fac487184e2093375cd9f306e8d02238b6f96b47/)](https://archive.softwareheritage.org/swh:1:dir:fac487184e2093375cd9f306e8d02238b6f96b47;origin=https://github.com/YasaminNematollahi/Covid-Dashboard-NY;visit=swh:1:snp:a4566ff7168f5b257f9e395459914f6e4d24bdba;anchor=swh:1:rev:e34aa7658b50df87b7997dd2cff0557b2eb93b38)
 
 # Covid-Dashboard-NY
-#### It is a project that aims to visualize the covid dataset.
+#### It is a project that aims to visualize the covid dataset. The dataset we are visualizing is available [here](https://github.com/owid/covid-19-data/tree/master/public/data).
 
 1. Instal **Conda** on your computer, you can install **Anaconda** or **Miniconda** for that.
 
@@ -22,11 +22,28 @@
    
    - Create the environment by using commands
       ```
-      $ conda create -n CovidNY python=3.8 -y
-      $ conda activate CovidNY
+       conda create -n CovidNY python=3.8 -y
+       conda activate CovidNY
       ```
 
 3. Install all the requirements, run the line:
 ```
  python -m pip install -r requirements.txt
 ```
+
+## For running the dashboard locally, follow the steps below:
+1. In Anaconda Navigator, open a terminal in your environment. You can open anaconda prompt from your search bar. In this case when the terminal opens, first you need to activate by writing: 
+```
+conda activate CovidNY
+```
+2. Change the directory to Covid-Dashboard-NY 
+```
+cd Covid-Dashboard-NY
+```
+3. In the terminal that appears, write this code: 
+```
+streamlit run Dashboard.py
+```
+There you go. In your browser you can see the dashboard. Voila.
+
+You can find the streamlit cloud [here](https://share.streamlit.io/yasaminnematollahi/covid-dashboard-ny/main/Dashboard.py).
