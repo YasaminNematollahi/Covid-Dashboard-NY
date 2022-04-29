@@ -47,16 +47,22 @@ typemode = st.sidebar.radio(" Select the type of data for displaying", ("New","T
 if mode == "Covid-19 cases":
   if typemode == "New":
     fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_cases_per_million", title = " and ".join(country), color = "location")
+    fig.update_layout (xaxis_title= "Date",yaxis_title = "New cases per million")
   elif typemode == "Total":
     fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "total_cases_per_million", title = " and ".join(country), color = "location")    
+    fig.update_layout (xaxis_title= "Date",yaxis_title = "Total cases per million")
   elif typemode == "Average":
     fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_cases_smoothed_per_million", title = " and ".join(country), color = "location")
+    fig.update_layout (xaxis_title= "Date",yaxis_title = "Average cases per million")
 elif mode == "Covid-19 deaths":
   if typemode == "New":
     fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_deaths_per_million", title = " and ".join(country), color = "location")
+    fig.update_layout (xaxis_title= "Date",yaxis_title = "New deaths per million")
   elif typemode == "Total":
     fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "total_deaths_per_million", title = " and ".join(country), color = "location")    
+    fig.update_layout (xaxis_title= "Date",yaxis_title = "Total deaths  per million")  
   elif typemode == "Average":
     fig = px.line(covid1[ covid1['location'].isin(country) ], x = "date", y = "new_deaths_smoothed_per_million", title = " and ".join(country), color = "location")
+    fig.update_layout (xaxis_title= "Date",yaxis_title = "Average deaths per million")
 
 st.plotly_chart(fig)
